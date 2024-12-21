@@ -1,0 +1,21 @@
+# Node modules directory
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# VS Code settings folder
+.vscode/
+
+# npm-debug.log
+npm-debug.log*
+
+# Yarn lock file (optional, if you use npm instead)
+yarn.lock
