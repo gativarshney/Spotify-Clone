@@ -193,8 +193,8 @@ body{
 .playBar{
     position: absolute;
     bottom: 0;
-    width: 100%;
-    background-color: rgb(101, 176, 101);
+    width: 90%;
+    background-color: white;
     padding: 12px;
 }
 .songButtons{
@@ -202,4 +202,12 @@ body{
     align-items: center;
     justify-content: center;
     gap: 1rem;
+}
+.songList ul {
+    padding: 0 12px;
+    font-size: 0.8rem;
+}
+.songList li{
+    list-style-type: decimal;
+    padding: 0.5rem 0;
 }
