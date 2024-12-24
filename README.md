@@ -21,7 +21,7 @@ Steps to set up the project locally.
    ```
 2. Navigate into the project directory:
     ```bash
-   cd spotify-clone
+   cd Spotify-Clone
    ```
 3. Open the project in your code editor:
     ```bash
