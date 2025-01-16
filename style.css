@@ -208,6 +208,24 @@ body{
     font-size: 0.8rem;
 }
 .songList li{
-    list-style-type: decimal;
+    list-style-type: none;
     padding: 0.5rem 0;
+    display: flex;
+    padding: 10px;
+    gap: 20px;
+    padding: 12px 0;
+}
+.songList .info{
+    padding: 10px;
+}
+.playnow{
+    display: flex;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.playnow span{
+    font-size: 10px;
+    width: 65px;
 }

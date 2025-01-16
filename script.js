@@ -11,7 +11,8 @@ async function getSongs(){
     for(let i=0; i<as.length; i++){
         const element = as[i];
         if(element.href.includes(".mp3")){
-            songs.push(as[i].href.split("/songs/")[1]);
+            const element = as[i].href.split("/songs/")[1]
+            songs.push(element.split(".mp3")[0]);
         }
     }
     return songs;
