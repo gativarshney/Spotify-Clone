@@ -18,6 +18,8 @@ async function getSongs(){
     return songs;
 }
 async function main(){
+    let currentSong;
+
     // List of all songs
     let songs = await getSongs();
     console.log(songs);
@@ -37,6 +39,12 @@ async function main(){
                 </div> 
             </li>`;
     }
+
+    // Attach an event listener to each song
+
+    Array.from(document.querySelector(".songList")).getElementsByTagName("li").forEach(element => {
+        console.log(element)
+    });
 
     
 }

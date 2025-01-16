@@ -20,8 +20,8 @@ body{
     position: relative;
 }
 .home{
-    height: 14vh auto;
-
+    /* height: 14vh; */
+    height: auto;
 }
 .home ul{
     display: flex;
@@ -198,7 +198,8 @@ body{
     width: 70vw;
     background-color: #c2b8b8;
     padding: 12px 0;
-    border-radius: 1.2rem;
+    border-radius: 10px;
+    height: 40px;
 }
 .songButtons{
     display: flex;
@@ -233,8 +234,30 @@ body{
     width: 65px;
 }
 .songList{
-    height: 500px;
+    height: 63.5vh;
     overflow: auto;
     margin-bottom: 4rem ;
     scroll-behavior: smooth;
+}
+.seekbar{
+    height: 4px;
+    width: 100%;
+    background-color: grey;
+    bottom: 0;
+    position: absolute;
+    border-radius: 1rem;
+    margin: 6px;
+    filter: invert(1);
+}
+.circle{
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background-color: white;
+    position: relative;
+    bottom: 5px;
+    left: 0%;
+    transition: left 0.5s;
+    cursor: pointer;
+
 }
