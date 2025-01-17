@@ -60,7 +60,7 @@ async function main(){
 
     // List of all songs
     let songs = await getSongs();
-    console.log(songs);
+    // console.log(songs); 
     playMusic(songs[0].replaceAll("_", " "), true);
 
     // Show all the songs in the Library
@@ -106,6 +106,26 @@ async function main(){
         console.log(currentSong.currentTime, currentSong.duration)
         document.querySelector(".songtime").innerHTML = `${formatSongDuration(currentSong.currentTime)}/${formatSongDuration(currentSong.duration)}`
         document.querySelector(".circle").style.left = (currentSong.currentTime / currentSong.duration) * 100 + "%";
+    })
+
+    // Add an Event Listener to Seekbar
+    document.querySelector(".seekbar").addEventListener("click", e=>{
+        let percent = (e.offsetX / e.target.getBoundingClientRect().width) * 100    // in --> %
+        
+        document.querySelector(".circle").style.left = percent + "%";
+        currentSong.currentTime = (currentSong.duration) * percent/100;
+        
+        // target --> Seekbar &  getBoundingClientRect() --> gives info about size and position of an element
+    })
+
+    // Add an Event Listener for Hamburger
+    document.querySelector(".hamburger").addEventListener("click", ()=>{
+        document.querySelector(".left").style.left = "0";
+    })
+
+    // Event Listener for Close Button
+    document.querySelector(".close").addEventListener("click", ()=>{
+        document.querySelector(".left").style.left = "-120%"
     })
 }
 main();

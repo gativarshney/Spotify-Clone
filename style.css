@@ -8,10 +8,11 @@
 body{
     background-color: black;
     color: white;
+    height: 100%;
 }
 .left{
     width: 25vw;
-    margin: 3px 0;
+    margin: 3px;
 }
 .right{
     width: 75vw;
@@ -22,6 +23,7 @@ body{
 .home{
     /* height: 14vh; */
     height: auto;
+    overflow: hidden;
 }
 .home ul{
     display: flex;
@@ -33,6 +35,7 @@ body{
     list-style: none;
     gap: 1rem;
     padding-top: 1rem;
+    font-weight: 450;
 }
 .home ul li img{
     height: 1rem;
@@ -131,13 +134,6 @@ body{
     transform: scale(1.04);
     background-color: rgba(255, 255, 255, 0.89);
 }
-.hamburgerContainer svg{
-    background-color: rgba(0, 0, 0, 0.511);
-    border-radius: 50%;
-    padding: 2px;
-    cursor: pointer;
-}
-
 .cardContainer{
     display: flex;
     gap: 0.8rem;
@@ -251,6 +247,7 @@ body{
     position: absolute;
     border-radius: 1rem;
     margin: 8px 0;
+    cursor: pointer;
 }
 .circle{
     height: 12px;
@@ -289,4 +286,58 @@ body{
     color: #333;
     font-size: 13px;
 
+}
+.logo img{
+    width: 110px;
+}
+.hamburgerContainer svg{
+    background-color: rgba(0, 0, 0, 0.511);
+    border-radius: 50%;
+    padding: 2px;
+    cursor: pointer;
+}
+.hamburgerContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+}
+.hamburger{
+    display: none;
+}
+.close img{
+    display: none;
+}
+
+/* Media Query */
+@media (max-width: 1400px) {
+    .left{
+        position: absolute;
+        left: -120%;
+        transition: all 0.3s;
+        z-index: 1;
+        width: 386px;
+        background-color: black;
+    }
+    .left .close{
+        position: absolute;
+        right: 10px;
+        top: 12px;
+    }
+    .left .close img{
+        height: 35px;
+        display: block;
+    }
+    .container{
+        margin-left: 9px;
+    }
+    .right{
+        width: 100vw;
+    }
+    .playBar{
+        width: 90vw;
+    }
+    .hamburger{
+        display: block;
+    }
 }
