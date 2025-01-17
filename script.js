@@ -1,6 +1,21 @@
 console.log("JavaScript Code!");
 
 let currentSong = new Audio();
+// let isPlaying = false;              // Global Variable to track global state
+
+function formatSongDuration(seconds) {
+    seconds = Math.max(0, Math.floor(seconds));
+    
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    
+    // Format with leading zeros if needed
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+    
+    // Return the formatted string
+    return `${formattedMinutes}:${formattedSeconds}`;
+}
 
 async function getSongs(){
     let a = await fetch("http://127.0.0.1:3000/songs/");
@@ -20,17 +35,24 @@ async function getSongs(){
     return songs;
 }
 
-const playMusic = (track)=>{
+const playMusic = (track, pause=false)=>{
     let formattedTrack = track.replaceAll(" ", "_")
     let encodedTrack = encodeURIComponent(formattedTrack + ".mp3");     // To handle spaces and special characters 
     // let audio = new Audio("/songs/" + encodedTrack)
     // audio.play()
 
     currentSong.src = "/songs/" + encodedTrack;
-    currentSong.play()
-    play.src = "/images/pause.svg"
+    
+    if(!pause){
+        currentSong.play()
+        play.src = "/images/pause.svg"
+    }
+    else{
+        currentSong.pause()
+        play.src = "/images/play.svg"
+    }
 
-    document.querySelector(".songinfo").innerHTML = track
+    document.querySelector(".songinfo").innerHTML = track;
     document.querySelector(".songtime").innerHTML = "00:00 / 00:00" 
 }
 
@@ -39,6 +61,7 @@ async function main(){
     // List of all songs
     let songs = await getSongs();
     console.log(songs);
+    playMusic(songs[0].replaceAll("_", " "), true);
 
     // Show all the songs in the Library
     let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0];
@@ -77,6 +100,12 @@ async function main(){
             play.src = "/images/play.svg"
         }
     })
-    
+
+    // Listen for Time Update Event
+    currentSong.addEventListener("timeupdate", ()=>{
+        console.log(currentSong.currentTime, currentSong.duration)
+        document.querySelector(".songtime").innerHTML = `${formatSongDuration(currentSong.currentTime)}/${formatSongDuration(currentSong.duration)}`
+        document.querySelector(".circle").style.left = (currentSong.currentTime / currentSong.duration) * 100 + "%";
+    })
 }
 main();
