@@ -28,6 +28,10 @@ const playMusic = (track)=>{
 
     currentSong.src = "/songs/" + encodedTrack;
     currentSong.play()
+    play.src = "/images/pause.svg"
+
+    document.querySelector(".songinfo").innerHTML = track
+    document.querySelector(".songtime").innerHTML = "00:00 / 00:00" 
 }
 
 async function main(){
@@ -61,6 +65,18 @@ async function main(){
         })
     });
 
+    // Attach an Event Listener to play, next and previous
+
+    play.addEventListener("click", ()=>{
+        if(currentSong.paused){
+            currentSong.play();
+            play.src = "/images/pause.svg"
+        }
+        else{
+            currentSong.pause();
+            play.src = "/images/play.svg"
+        }
+    })
     
 }
 main();

@@ -76,6 +76,7 @@ body{
     min-height: 75vh;
     /* height: 100%; */
     position: relative;
+    cursor: pointer;
 }
 .footer{
     display: flex;
@@ -134,6 +135,7 @@ body{
     background-color: rgba(0, 0, 0, 0.511);
     border-radius: 50%;
     padding: 2px;
+    cursor: pointer;
 }
 
 .cardContainer{
@@ -196,7 +198,8 @@ body{
     position: fixed;
     bottom: 1rem;
     width: 70vw;
-    background-color: #c2b8b8;
+    /* background-color: #c2b8b8; */
+    background-color: #ded8d8;
     padding: 12px 0;
     border-radius: 10px;
     height: 40px;
@@ -246,7 +249,7 @@ body{
     bottom: 0;
     position: absolute;
     border-radius: 1rem;
-    margin: 6px;
+    margin: 8px 0;
     filter: invert(1);
 }
 .circle{
@@ -255,9 +258,24 @@ body{
     border-radius: 50%;
     background-color: white;
     position: relative;
-    bottom: 5px;
+    bottom: 4px;
     left: 0%;
     transition: left 0.5s;
     cursor: pointer;
 
+}
+.songButtons img{
+    cursor: pointer;
+}
+.abovebar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 1rem;
+}
+.songinfo{
+    color: black;
+}
+.songtime{
+    color: black;
 }
