@@ -1,5 +1,7 @@
 console.log("JavaScript Code!");
 
+let currentSong = new Audio();
+
 async function getSongs(){
     let a = await fetch("http://127.0.0.1:3000/songs/");
     let response = await a.text();
@@ -17,8 +19,18 @@ async function getSongs(){
     }
     return songs;
 }
+
+const playMusic = (track)=>{
+    let formattedTrack = track.replaceAll(" ", "_")
+    let encodedTrack = encodeURIComponent(formattedTrack + ".mp3");     // To handle spaces and special characters 
+    // let audio = new Audio("/songs/" + encodedTrack)
+    // audio.play()
+
+    currentSong.src = "/songs/" + encodedTrack;
+    currentSong.play()
+}
+
 async function main(){
-    let currentSong;
 
     // List of all songs
     let songs = await getSongs();
@@ -42,8 +54,11 @@ async function main(){
 
     // Attach an event listener to each song
 
-    Array.from(document.querySelector(".songList")).getElementsByTagName("li").forEach(element => {
-        console.log(element)
+    Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e=>{
+        e.addEventListener("click", element=>{
+            console.log(e.querySelector(".info").firstElementChild.innerHTML);
+            playMusic(e.querySelector(".info").firstElementChild.innerHTML);
+        })
     });
 
     
