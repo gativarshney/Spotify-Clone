@@ -104,7 +104,7 @@ async function main(){
     // Listen for Time Update Event
     currentSong.addEventListener("timeupdate", ()=>{
         console.log(currentSong.currentTime, currentSong.duration)
-        document.querySelector(".songtime").innerHTML = `${formatSongDuration(currentSong.currentTime)}/${formatSongDuration(currentSong.duration)}`
+        document.querySelector(".songtime").innerHTML = `${formatSongDuration(currentSong.currentTime)} / ${formatSongDuration(currentSong.duration)}`
         document.querySelector(".circle").style.left = (currentSong.currentTime / currentSong.duration) * 100 + "%";
     })
 
@@ -127,5 +127,8 @@ async function main(){
     document.querySelector(".close").addEventListener("click", ()=>{
         document.querySelector(".left").style.left = "-120%"
     })
+
+
+    
 }
 main();
