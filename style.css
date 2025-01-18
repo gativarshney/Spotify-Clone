@@ -79,7 +79,7 @@ body{
     height: 1rem;
 }
 .library{
-    min-height: 75vh;
+    height: 77vh;
     position: relative;
     cursor: pointer;
 }
@@ -142,8 +142,9 @@ body{
     flex-wrap: wrap;
     margin: 1rem;
     margin-left: 0px;
-    max-height: 65vh;
+    max-height: 62vh;
     overflow-y: auto;
+    
 }
 .spotifyPlaylist h2{
     font-size: 1.2rem;
@@ -312,6 +313,10 @@ body{
     align-items: center;
     justify-content: space-around;
     width: 175px;
+    cursor: pointer;
+}
+.range input{
+    cursor: pointer;
 }
 .logo img{
     width: 110px;
@@ -337,7 +342,7 @@ body{
 
 
 /* Media Query */
-@media (max-width: 1300px) {
+@media (max-width: 1250px) {
     .left{
         position: absolute;
         left: -120%;
