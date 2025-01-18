@@ -128,7 +128,7 @@ async function displayAlbums() {
     Array.from(document.getElementsByClassName("card")).forEach(e=>{
         e.addEventListener("click",  async item=>{
             songs = await getSongs(`songs/${item.currentTarget.dataset.folder}/`);
-            playMusic(songs[0]);
+            // playMusic(songs[0]);
         })
     })
 }
@@ -207,8 +207,10 @@ async function main(){
 
     document.querySelector(".range").getElementsByTagName("input")[0].addEventListener("change", (e)=>{
         console.log("Setting Volume to " + e.target.value + "/100")
-        currentSong.volume = parseInt(e.target.value) / 100;
-        // 1.0 means highest volume (100%, default) & 0.0 means silent (mute)
+        currentSong.volume = parseInt(e.target.value) / 100;    // 1.0 means highest volume (100%, default) & 0.0 means silent (mute)
+        if(currentSong.volume > 0){
+            document.querySelector(".volume>img").src = document.querySelector(".volume>img").src.replace("mute.svg" ,"volume.svg")
+        }
     })
 
     // Event Listener to Mute the Volume
