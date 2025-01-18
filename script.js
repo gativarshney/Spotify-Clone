@@ -1,10 +1,14 @@
 console.log("JavaScript Code!");
 
+// Global Variable to track global state
 let currentSong = new Audio();
-// let isPlaying = false;              // Global Variable to track global state
+let songs;
 
 function formatSongDuration(seconds) {
     seconds = Math.max(0, Math.floor(seconds));
+    if(isNaN(seconds) || seconds<0){
+        return "00:00"
+    }
     
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
@@ -28,8 +32,8 @@ async function getSongs(){
     for(let i=0; i<as.length; i++){
         const element = as[i];
         if(element.href.includes(".mp3")){
-            const element = as[i].href.split("/songs/")[1]
-            songs.push(element.split(".mp3")[0]);
+            const element = as[i].href.split("/songs/")[1].split(".mp3")[0].replaceAll("_", " ");
+            songs.push(element)
         }
     }
     return songs;
@@ -59,8 +63,7 @@ const playMusic = (track, pause=false)=>{
 async function main(){
 
     // List of all songs
-    let songs = await getSongs();
-    // console.log(songs); 
+    songs = await getSongs();
     playMusic(songs[0].replaceAll("_", " "), true);
 
     // Show all the songs in the Library
@@ -83,7 +86,6 @@ async function main(){
 
     Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e=>{
         e.addEventListener("click", element=>{
-            console.log(e.querySelector(".info").firstElementChild.innerHTML);
             playMusic(e.querySelector(".info").firstElementChild.innerHTML);
         })
     });
@@ -103,7 +105,6 @@ async function main(){
 
     // Listen for Time Update Event
     currentSong.addEventListener("timeupdate", ()=>{
-        console.log(currentSong.currentTime, currentSong.duration)
         document.querySelector(".songtime").innerHTML = `${formatSongDuration(currentSong.currentTime)} / ${formatSongDuration(currentSong.duration)}`
         document.querySelector(".circle").style.left = (currentSong.currentTime / currentSong.duration) * 100 + "%";
     })
@@ -128,7 +129,34 @@ async function main(){
         document.querySelector(".left").style.left = "-120%"
     })
 
+    // Add an Event Listener at previous
+    previous.addEventListener("click", ()=>{
+        console.log("Previous is clicked!");
+        let currentMusic = currentSong.src.split("/songs/")[1].split(".mp3")[0].replaceAll("_", " ");
+        let index = songs.indexOf(currentMusic);
 
+        if((index-1) >= 0){
+            playMusic(songs[index-1]);
+        }
+    })
+    // Add an Event Listener at next
+    next.addEventListener("click", ()=>{
+        console.log("Next is clicked!");
+
+        let currentMusic = currentSong.src.split("/songs/")[1].split(".mp3")[0].replaceAll("_", " ");
+        let index = songs.indexOf(currentMusic);
+
+        if((index+1) < songs.length){
+            playMusic(songs[index+1]);
+        }
+    })
+
+    // Add an Event Listener to Volume
+    document.querySelector(".range").getElementsByTagName("input")[0].addEventListener("change", (e)=>{
+        console.log("Setting Volume to " + e.target.value + "/100")
+        currentSong.volume = parseInt(e.target.value) / 100;
+        // 1.0 means highest volume (100%, default) & 0.0 means silent (mute)
+    })
     
 }
 main();
