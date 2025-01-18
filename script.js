@@ -3,6 +3,7 @@ console.log("JavaScript Code!");
 // Global Variable to track global state
 let currentSong = new Audio();
 let songs;
+let currFolder;
 
 function formatSongDuration(seconds) {
     seconds = Math.max(0, Math.floor(seconds));
@@ -21,53 +22,26 @@ function formatSongDuration(seconds) {
     return `${formattedMinutes}:${formattedSeconds}`;
 }
 
-async function getSongs(){
-    let a = await fetch("http://127.0.0.1:3000/songs/");
+async function getSongs(folder){
+    currFolder = folder;
+    
+    let a = await fetch(`http://127.0.0.1:3000/${folder}/`);
     let response = await a.text();
     
     let div = document.createElement("div");
     div.innerHTML = response;
     let as = div.getElementsByTagName("a");
-    let songs = [];
+    songs = [];
     for(let i=0; i<as.length; i++){
         const element = as[i];
         if(element.href.includes(".mp3")){
-            const element = as[i].href.split("/songs/")[1].split(".mp3")[0].replaceAll("_", " ");
+            const element = as[i].href.split(`${folder}`)[1].split(".mp3")[0].replaceAll("_", " ");
             songs.push(element)
         }
     }
-    return songs;
-}
-
-const playMusic = (track, pause=false)=>{
-    let formattedTrack = track.replaceAll(" ", "_")
-    let encodedTrack = encodeURIComponent(formattedTrack + ".mp3");     // To handle spaces and special characters 
-    // let audio = new Audio("/songs/" + encodedTrack)
-    // audio.play()
-
-    currentSong.src = "/songs/" + encodedTrack;
-    
-    if(!pause){
-        currentSong.play()
-        play.src = "/images/pause.svg"
-    }
-    else{
-        currentSong.pause()
-        play.src = "/images/play.svg"
-    }
-
-    document.querySelector(".songinfo").innerHTML = track;
-    document.querySelector(".songtime").innerHTML = "00:00 / 00:00" 
-}
-
-async function main(){
-
-    // List of all songs
-    songs = await getSongs();
-    playMusic(songs[0].replaceAll("_", " "), true);
-
     // Show all the songs in the Library
     let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0];
+    songUL.innerHTML = "";
     for (const song of songs) {
         songUL.innerHTML = songUL.innerHTML + `<li>
                 <img class="invert" src="images/music.svg" alt="">
@@ -89,6 +63,37 @@ async function main(){
             playMusic(e.querySelector(".info").firstElementChild.innerHTML);
         })
     });
+    return songs;
+}
+
+const playMusic = (track, pause=false)=>{
+    let formattedTrack = track.replaceAll(" ", "_")
+    let encodedTrack = encodeURIComponent(formattedTrack + ".mp3");     // To handle spaces and special characters 
+    // let audio = new Audio("/songs/" + encodedTrack)
+    // audio.play()
+
+    currentSong.src = `/${currFolder}/` + encodedTrack;
+    
+    if(!pause){
+        currentSong.play()
+        play.src = "/images/pause.svg"
+    }
+    else{
+        currentSong.pause()
+        play.src = "/images/play.svg"
+    }
+
+    document.querySelector(".songinfo").innerHTML = track;
+    document.querySelector(".songtime").innerHTML = "00:00 / 00:00" 
+}
+
+async function main(){
+
+    // Display all the Albums on the Page
+
+    // List of all songs
+    await getSongs("songs/Bhajan/");
+    playMusic(songs[0].replaceAll("_", " "), true);
 
     // Attach an Event Listener to play, next and previous
 
@@ -152,10 +157,21 @@ async function main(){
     })
 
     // Add an Event Listener to Volume
+
+    
     document.querySelector(".range").getElementsByTagName("input")[0].addEventListener("change", (e)=>{
         console.log("Setting Volume to " + e.target.value + "/100")
         currentSong.volume = parseInt(e.target.value) / 100;
         // 1.0 means highest volume (100%, default) & 0.0 means silent (mute)
+    })
+
+    // Load the Playlist whenever the card is clicked
+
+    Array.from(document.getElementsByClassName("card")).forEach(e=>{
+        e.addEventListener("click",  async item=>{
+            // console.log(item.currentTarget, item.currentTarget.dataset)
+            songs = await getSongs(`songs/${item.currentTarget.dataset.folder}/`);
+        })
     })
     
 }

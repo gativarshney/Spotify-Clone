@@ -190,7 +190,6 @@ body{
     padding: 0px;
     transition: all 1s ease-out;
     opacity: var(--a);
-
 }
 .play svg{
     height: 2.3rem;
