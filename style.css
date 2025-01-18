@@ -335,6 +335,7 @@ body{
 }
 .hamburger{
     display: none;
+    cursor: pointer;
 }
 .close img{
     display: none;
