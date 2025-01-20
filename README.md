@@ -1,10 +1,20 @@
 # Spotify Clone
 A simple Spotify clone built using HTML, CSS, and JavaScript. This project replicates the layout and basic functionality of the Spotify web player, including features like a navigation bar, music controls, and playlists. It can be extended in the future with dynamic features such as API integration for fetching music data, user authentication, and personalized playlists.
 
+## Tech Stack
+
+<div align="left">
+<img alt="HTML5" src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white"/>
+<img alt="CSS3" src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white"/> 
+<img alt="JavaScript" src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/>
+</div>
+
 ## Features
-- Responsive navigation bar
-- Music controls (play, pause, next, previous)
-- Basic layout similar to Spotify's interface
+- Responsive Design
+- Play/Pause: Allows the user to start or pause the playback of the currently selected track.
+- Next/Previous: Enables the user to skip to the next or previous track in the playlist or album.
+- Seek: The user can manually move forward or backwards within a track by dragging a slider or clicking on a progress bar.
+- Display the currently playing song and album artwork.
 - Mobile-friendly design
 - Future enhancements: The project can be extended with features like:
     - API integration: Fetching music data dynamically from Spotify's API.
