@@ -153,11 +153,11 @@ body{
     padding: 20px;
 }
 .spotifyPlaylist .card{
-    width: 250px;
+    width: 200px;
     border-radius: 0.5rem;
     background-color: #252525;
     transition: all .9s;
-
+    overflow-x: hidden;
 }
 .card > *{
     padding: 0.6rem;
@@ -194,8 +194,8 @@ body{
     padding: 0px;
     transition: all 1s ease-out;
     opacity: var(--a);
-    top: 52px;
-    left: 234px;
+    top: 15px;
+    left: 196px;
 }
 .play svg{
     height: 2.3rem;
