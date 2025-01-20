@@ -23,47 +23,54 @@ function formatSongDuration(seconds) {
 }
 
 async function getSongs(folder){
-    currFolder = folder;
-    
-    let a = await fetch(`http://127.0.0.1:3000/${folder}/`);
-    let response = await a.text();
-    
-    let div = document.createElement("div");
-    div.innerHTML = response;
-    let as = div.getElementsByTagName("a");
-    songs = [];
-    for(let i=0; i<as.length; i++){
-        const element = as[i];
-        if(element.href.includes(".mp3")){
-            const element = as[i].href.split(`${folder}`)[1].split(".mp3")[0].replaceAll("_", " ");
-            songs.push(element)
+
+    try{
+        currFolder = folder;
+        let a = await fetch(`http://127.0.0.1:3000/${folder}/`);
+        let response = await a.text();
+        if(!a.ok) throw new Error("Failed to fetch songs");
+        let div = document.createElement("div");
+        div.innerHTML = response;
+        let as = div.getElementsByTagName("a");
+        songs = [];
+        for(let i=0; i<as.length; i++){
+            const element = as[i];
+            if(element.href.includes(".mp3")){
+                const element = as[i].href.split(`${folder}`)[1].split(".mp3")[0].replaceAll("_", " ");
+                songs.push(element)
+            }
         }
-    }
-    // Show all the songs in the Library
-    let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0];
-    songUL.innerHTML = "";
-    for (const song of songs) {
-        songUL.innerHTML = songUL.innerHTML + `<li>
-                <img class="invert" src="images/music.svg" alt="">
-                <div class="info">
-                    <div>${song.replaceAll("_", " ")}</div>
-                    <div>Gati</div>
-                </div>
-                <div class="playnow">
-                    <span>Play Now</span>
-                    <img class="invert" src="images/play.svg" alt="">
-                </div> 
-            </li>`;
-    }
+        // Show all the songs in the Library
+        let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0];
+        songUL.innerHTML = "";
+        for (const song of songs) {
+            songUL.innerHTML = songUL.innerHTML + `<li>
+                    <img class="invert" src="images/music.svg" alt="">
+                    <div class="info">
+                        <div>${song.replaceAll("_", " ")}</div>
+                        <div>Gati</div>
+                    </div>
+                    <div class="playnow">
+                        <span>Play Now</span>
+                        <img class="invert" src="images/play.svg" alt="">
+                    </div> 
+                </li>`;
+        }
 
-    // Attach an event listener to each song
+        // Attach an event listener to each song
 
-    Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e=>{
-        e.addEventListener("click", element=>{
-            playMusic(e.querySelector(".info").firstElementChild.innerHTML);
-        })
-    });
-    return songs;
+        Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e=>{
+            e.addEventListener("click", element=>{
+                playMusic(e.querySelector(".info").firstElementChild.innerHTML);
+            })
+        });
+        return songs;
+    }
+    catch(error){
+        console.log("Error Fetching Songs : ", error);
+        alert("Could not load songs. Please Try Again.");
+    }
+    
 }
 
 const playMusic = (track, pause=false)=>{
@@ -184,7 +191,7 @@ async function main(){
     // Add an Event Listener at previous
     previous.addEventListener("click", ()=>{
         console.log("Previous is clicked!");
-        let currentMusic = currentSong.src.split("/songs/")[1].split(".mp3")[0].replaceAll("_", " ");
+        let currentMusic = currentSong.src.split(`/${currFolder}/`)[1].split(".mp3")[0].replaceAll("_", " ");
         let index = songs.indexOf(currentMusic);
 
         if((index-1) >= 0){
@@ -195,7 +202,7 @@ async function main(){
     next.addEventListener("click", ()=>{
         console.log("Next is clicked!");
 
-        let currentMusic = currentSong.src.split("/songs/")[1].split(".mp3")[0].replaceAll("_", " ");
+        let currentMusic = currentSong.src.split(`/${currFolder}/`)[1].split(".mp3")[0].replaceAll("_", " ");
         let index = songs.indexOf(currentMusic);
 
         if((index+1) < songs.length){
